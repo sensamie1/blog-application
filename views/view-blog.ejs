@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= blog.title %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    .blog-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .blog-meta {
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .blog-description {
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .blog-body {
+      color: #333;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="blog-container">
+    <h2 class="blog-title"><%= blog.title %></h2>
+    <p class="blog-meta">Published on: <%= blog.createdAt %></p>
+    <p class="blog-author">Author: <%= blog.author %></p>
+    <p class="blog-description"><%= blog.description %></p>
+    <div class="blog-body"><%= blog.body %></div>
+    <p class="blog-meta">Updated on <%= blog.updatedAt %></p>
+    <p class="blog-meta">Read Count <%= blog.read_count %></p>
+    <p class="blog-meta">Reading Time <%= blog.reading_time %></p>
+  </div>
+</body>
+</html>

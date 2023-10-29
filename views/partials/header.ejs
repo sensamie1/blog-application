@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .navbar {
+      overflow: hidden;
+      background-color: #2a5694;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+      font-size: 16px;  
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    .navbar a:hover, .dropdown:hover .dropbtn {
+      background-color: #0296cc;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .logo-image {
+      display: block;
+      width: 200px;
+      height: auto;
+      border-radius: 5px;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0296cc;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: 2px solid #2a5694;
+      border-radius: 5px;
+      background-color: #2a5694;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f4f4f4;
+    }
+
+    .search-label {
+      margin-right: 10px;
+    }
+
+    .search-input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+    }
+
+    .search-submit {
+      padding: 8px 20px;
+      background-color: #2a5694;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .navbar a, .dropdown .dropbtn {
+        display: none;
+      }
+      .navbar a.icon {
+        float: right;
+        display: block;
+      }
+      .navbar.responsive {position: relative;}
+      .navbar.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .navbar.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+      }
+      .navbar.responsive .dropdown {float: none;}
+      .navbar.responsive .dropdown-content {position: relative;}
+      .navbar.responsive .dropdown .dropbtn {
+        display: block;
+        width: 100%;
+        text-align: left;
+      }
+
+      .search-form {
+        padding: 10px;
+      }
+
+      .search-input {
+        width: 60%;
+        margin-right: 10px;
+      }
+
+      .search-submit {
+        width: 30%;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar" id="myNavbar">
+    <% if (user) { %>
+      <a href="/views/home" class="active">Home</a>
+      <a href="/views/auth-blogs">Blogs</a>
+      <div class="dropdown">
+        <button class="dropbtn">My Blogs 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="/views/blogspublished">Published</a>
+          <a href="/views/blogsdraft">Draft</a>
+          <a href="/views/blogsdeleted">Deleted</a>
+        </div>
+      </div>
+      <a href="/views/logout">Logout</a>
+    <% } else{ %>
+      <a href="/views/welcome" class="active">Home</a>
+      <a href="/views/blogs">Blogs</a>
+      <a href="/views/login">Login</a>
+      <a href="/views/signup">Signup</a>
+    <% } %>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+  </div>
+  <% if (user) { %>
+  <div class="search-form">
+    <form id="searchForm" action="/views/auth-search" method="get">
+      <label for="search" class="search-label">Search:</label>
+      <input type="text" id="search" name="query" placeholder="Search for blogs..." class="search-input" required>
+      <input type="submit" value="auth-search" class="search-submit">
+    </form>
+  </div>
+  <% } else{ %>
+    <div class="search-form">
+      <form id="searchForm" action="/views/search" method="get">
+        <label for="search" class="search-label">Search:</label>
+        <input type="text" id="search" name="query" placeholder="Search for blogs..." class="search-input" required>
+        <input type="submit" value="Search" class="search-submit">
+      </form>
+    </div>
+  <% } %>
+  
+
+
+  <img src="/views/assets/blog-logo.PNG" alt="Blog App Logo" class="logo-image">
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myNavbar");
+      if (x.className === "navbar") {
+        x.className += " responsive";
+      } else {
+        x.className = "navbar";
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <title>Create Blog</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  h2 {
+    color: #333;
+    text-align: center;
+  }
+
+  form {
+    max-width: 400px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+
+  input[type="text"],
+  textarea,
+  input[type="datetime-local"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  input[type="submit"] {
+    background: #2a5694;
+    color: #fff;
+    border: 0;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  input[type="submit"]:hover {
+    background: #0296cc;
+  }
+
+  fieldset {
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+
+  legend {
+    width: auto;
+    padding: 0 10px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  @media only screen and (max-width: 600px) {
+    form {
+      width: 100%;
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+
+  <h2>Create Blog</h2>
+
+  <% if (messages.error) { %>
+    <div class="alert alert-danger text-center">
+      <ul>
+        <% messages.error.forEach(function(error) { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+  
+  <% if (messages.success) { %>
+    <div class="alert alert-success text-center">
+      <li><%= messages.success %></li>
+    </div>
+  <%} else {%>
+    <form id="blogForm" action="/views/blogcreate" method="post">
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" value="" required><br>
+      <label for="description">Description:</label><br>
+      <input type="text" id="description" name="description" value="" required><br>
+      <label for="tags">Tags:</label><br>
+      <input type="text" id="tags" name="tags" value="" placeholder="separate tags with comma (,)"><br>
+      <label for="body`">Body:</label><br>
+      <textarea id="body" name="body" rows="4" cols="50" required></textarea><br><br>
+      
+        <div class="button-container">
+          <input class="btn" type="submit" value="Submit">
+        </div>
+    </form> 
+  <%}%>
+
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+
+
+</body>
+</html>
+

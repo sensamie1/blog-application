@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      margin-top: 30px;
+      color: #333;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .btn:hover {
+      background-color: #0296cc;
+    }
+
+    #create-blog {
+      margin-top: 30px;
+      padding: 15px 30px;
+      background-color: #2a5694;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2em;
+    }
+
+    #create-blog:hover {
+      background-color: #0296cc;
+    }
+
+    @media only screen and (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+      p {
+        font-size: 1em;
+      }
+      #create-blog {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <h3><a class="btn" href="/views/home">Welcome back, <%= `${user.first_name} ${user.last_name}!` %></a></h3>
+  <h1>Welcome to your Blog App</h1>
+  <p>We're delighted to see you back on Blogg App. Your creative journey continues here. Explore, write, and engage with our vibrant community. Share your stories, insights, and perspectives, and be a part of inspiring discussions that shape our shared narrative.</p>
+  <p>With your unique voice and perspective, you add value to our community. Take advantage of our seamless interface to draft, edit, and publish your latest masterpiece effortlessly. Your contributions are the heartbeat of our platform. Keep the creativity flowing and let your words resonate with the world.</p>
+  <p>
+    Happy writing!
+  </p>
+  <p><strong>Blog App Team</strong></p>
+  <a href="/views/blogcreate"><button id="create-blog">Create Blog</button></a><br/>
+
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+
+
+</body>
+</html>

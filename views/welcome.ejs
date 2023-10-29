@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin-top: 100px;
+      background-color: #f9f9f9;
+    }
+
+    .intro {
+      max-width: 600px;
+      padding: 20px;
+      margin-top: -200px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border: 2px solid #2a5694;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #2a5694;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0296cc;
+      color: #fff;
+    }
+
+    @media screen and (max-width: 768px) {
+      .intro {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <div class="container">
+    <div class="intro">
+      <h2>Welcome to Blog App</h2>
+      <p>
+        Ready to embark on your writing journey? Join our vibrant community of writers and readers today. Sign up to unleash the power of your words and connect with like-minded individuals passionate about the art of storytelling.
+      </p>
+      <p>
+        Already a part of our community? Sign in to resume your blogging adventure. Share your latest insights, explore new perspectives, and engage in thoughtful discussions. Your unique voice has the power to inspire and influence others. Let's continue this journey of creativity and self-expression together.
+      </p>
+      <p>
+        Not sure where to begin? Take a tour of our platform to discover published blogs and features designed to make your blogging experience seamless and enjoyable.
+      </p>
+      <p>
+        Start your blogging adventure with us today. Your voice matters, and we're here to amplify it.
+      </p>
+      <p>
+        Happy writing!
+      </p>
+      <p><strong>Blog App Team</strong></p>
+      
+      <a class="btn" href="/views/login">Login</a>
+      <a class="btn" href="/views/signup">Sign Up</a>
+    </div>
+  </div>
+  
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+
+
+</body>
+</html>

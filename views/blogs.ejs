@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    #myButton {
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    tr:last-child td {
+      white-space: normal;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #505459;
+      margin: 0 10px;
+    }
+
+    .disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+
+    @media only screen and (max-width: 600px) {
+      table {
+        border: 0;
+        font-family: arial, sans-serif;
+      }
+      
+      table th {
+        display: none;
+      }
+      
+      table tr {
+        margin-bottom: 10px;
+        display: block;
+        border-bottom: 2px solid #ddd;
+      }
+      
+      table td {
+        display: block;
+        text-align: left;
+        font-size: 13px;
+      }
+      
+      table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+      }
+    }
+  </style>
+  <script>
+    
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    window.onload = function() {
+      const elements = document.getElementsByClassName('dateElement');
+      for (let i = 0; i < elements.length; i++) {
+        const currentDate = new Date(elements[i].textContent);
+        const formattedDate = formatDate(currentDate);
+        elements[i].textContent = formattedDate;
+      }
+    };
+
+  </script>
+</head>
+<body>
+
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+  <% if (messages.error) { %>
+    <div class="alert alert-danger text-center">
+      <ul>
+        <% messages.error.forEach(function(error) { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+  <% if(messages.success) {%>
+    <div class="alert alert-success text-center">
+      <li><%=messages.success%></li>
+  </div>
+  <%} else {%>
+  <h2>Published Blogs</h2>
+  
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Tags</th>
+      <th>Date Created</th>
+      <th>Date Updated</th>
+      <th> </th>
+    </tr>
+      <% blogs.forEach(blog => { %>
+        <tr>
+          <td><%= blog.title %></td>
+          <td><%= blog.description %></td>
+          <td><%= blog.tags %></td>
+          <td class="dateElement"><%= blog.createdAt %></td>
+          <td class="dateElement"><%= blog.updatedAt %></td>
+          <td>
+            <a href="/views/blogs/<%= blog._id %>">
+              <button 
+              id="myButton"
+              type="submit"
+              class="myButton"
+              formmethod="post" 
+              title="Click to read blog!"
+              style="background-color: #2a5694">
+                Read More
+              </button>
+            </a>
+          </td>
+        </tr>
+        <% }); %>
+  </table>
+
+  <!-- Pagination buttons -->
+  <div class="pagination">
+    <% if (current > 1) { %>
+        <a href="/views/blogs?page=<%= Number(current) - 1 %>" class="btn">Previous</a>
+    <% } else { %>
+        <a class="btn" style="cursor: not-allowed;">Previous</a>
+    <% } %>
+
+    <p>Page <%= current %> of <%= pages %></p>
+
+    <% if (current < pages) { %>
+        <a href="/views/blogs?page=<%= Number(current) + 1 %>" class="btn">Next</a>
+    <% } else { %>
+        <a class="btn" style="cursor: not-allowed;">Next</a>
+    <% } %>
+  </div>
+  <%}%>
+
+
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+
+</body>
+</html>
+
