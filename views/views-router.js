@@ -113,7 +113,7 @@ router.get('/blogs/:id', async (req, res) => {
 
         // Increment the read_count by 1
         blog.read_count = blog.read_count + 1;
-        await blog.save();
+        
 
         // Reading_time based on the word count
         const wordsPerMinute = 250;
@@ -121,10 +121,13 @@ router.get('/blogs/:id', async (req, res) => {
         const minutes = Math.ceil(wordCount / wordsPerMinute);
         const readingTime = `${minutes} min(s)`;
 
+        blog.reading_time = readingTime
+        await blog.save();
+
         res.render('view-blog', {
             user: res.locals.user,
             blog: blog,
-            readingTime: readingTime
+            reading_time: readingTime
         });
     } catch (error) {
 
@@ -252,7 +255,6 @@ router.get('/auth-blogs/:id', async (req, res) => {
 
         // Increment the read_count by 1
         blog.read_count = blog.read_count + 1;
-        await blog.save();
 
         // Reading_time based on the word count
         const wordsPerMinute = 250;
@@ -260,10 +262,13 @@ router.get('/auth-blogs/:id', async (req, res) => {
         const minutes = Math.ceil(wordCount / wordsPerMinute);
         const readingTime = `${minutes} min(s)`;
 
-        res.render('auth-view-blog', {
+        blog.reading_time = readingTime
+        await blog.save();
+
+        res.render('view-blog', {
             user: res.locals.user,
             blog: blog,
-            readingTime: readingTime
+            reading_time: readingTime
         });
     } catch (error) {
 
