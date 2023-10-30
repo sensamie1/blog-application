@@ -15,6 +15,11 @@ router.use(cookieParser())
 
 router.use(express.static('./views'));
 
+// /views (welcome page)
+router.get('/', (req, res) => {
+    res.render('welcome', { user: res.locals.user, });
+})
+
 // /views/welcome (welcome page)
 router.get('/welcome', (req, res) => {
     res.render('welcome', { user: res.locals.user, });
