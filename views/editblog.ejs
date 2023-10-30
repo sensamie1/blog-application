@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Blog</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  .page-content h2 {
+    color: #333;
+    text-align: center;
+  }
+
+  .page-content form {
+    max-width: 400px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+
+  .page-content label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+
+  .page-content input[type="text"],
+  .page-content textarea,
+  .page-content input[type="datetime-local"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .page-content input[type="submit"] {
+    background: #2a5694;
+    color: #fff;
+    border: 0;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .page-content input[type="submit"]:hover {
+    background: #0296cc;
+  }
+
+  .page-content fieldset {
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+
+  .page-content legend {
+    width: auto;
+    padding: 0 10px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  @media only screen and (max-width: 600px) {
+    form {
+      width: 100%;
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+    <header>
+      <%- include('./partials/header'); %>
+    </header>
+  <div class="page-content">
+    <h2>Edit Blog (<%= blogs.title %>)</h2>
+      <form action="/views/blogs1/edit/<%= blogs._id %>" method="post">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="<%= blogs.title %>" required><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description" value="<%= blogs.description %>" required><br>
+        <input type="hidden" id="state" name="state" value="draft" required><br>
+        <label for="tags">Tags:</label><br>
+        <input type="text" id="tags" name="tags" value="<%= blogs.tags %>" placeholder="separate tags with comma (,)"><br>
+        <label for="body`">Body:</label><br>
+        <textarea id="body" name="body"  rows="4" cols="50" required><%= blogs.body %></textarea><br><br>
+        <div class="button-container">
+          <input class="btn" type="submit" value="Update Blog">
+        </div>
+      </form>
+  </div>
+
+
+    <footer>
+      <%- include('./partials/footer'); %>
+    </footer>
+
+</body>
+</html>
+

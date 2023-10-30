@@ -61,6 +61,26 @@
       cursor: not-allowed;
     }
 
+    #error-message {
+      color: #dc3545;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      padding: 5px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    #success-message {
+      color: #28a745;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: center;
+    }
+
     @media only screen and (max-width: 600px) {
       table {
         border: 0;
@@ -118,7 +138,20 @@
   <header>
     <%- include('./partials/header'); %>
   </header>
-
+  <% if (messages.error) { %>
+    <div id="error-message">
+      <ul>
+        <% messages.error.forEach(function(error) { %>
+          <li><%= error %></li>
+        <% }); %>
+      </ul>
+    </div>
+  <% } %>
+  <% if(messages.success) {%>
+    <div id="success-message">
+      <li><%=messages.success%></li>
+  </div>
+  <%} else {%>
   <h2>Published Blogs</h2>
   <a href="/views/blogcreate" class="btn">Create Blogs</a>
   
@@ -139,14 +172,11 @@
           <td class="dateElement"><%= blog.createdAt %></td>
           <td class="dateElement"><%= blog.updatedAt %></td>
           <td>
-            <a href="/views/blogs/<%= blog._id %>">
+            <a href="/views/auth-blogs/<%= blog._id %>">
               <button 
-              id="myButton"
-              type="submit"
-              class="myButton"
-              formmethod="post" 
-              title="Click to read blog!"
-              style="background-color: #2a5694">
+                id="myButton"
+                title="Click to read blog!"
+                style="background-color: #2a5694">
                 Read More
               </button>
             </a>
@@ -158,7 +188,7 @@
   <!-- Pagination buttons -->
   <div class="pagination">
     <% if (current > 1) { %>
-        <a href="/views/blogs?page=<%= Number(current) - 1 %>" class="btn">Previous</a>
+        <a href="/views/auth-blogs?page=<%= Number(current) - 1 %>" class="btn">Previous</a>
     <% } else { %>
         <a class="btn" style="cursor: not-allowed;">Previous</a>
     <% } %>
@@ -166,11 +196,22 @@
     <p>Page <%= current %> of <%= pages %></p>
 
     <% if (current < pages) { %>
-        <a href="/views/blogs?page=<%= Number(current) + 1 %>" class="btn">Next</a>
+        <a href="/views/auth-blogs?page=<%= Number(current) + 1 %>" class="btn">Next</a>
     <% } else { %>
         <a class="btn" style="cursor: not-allowed;">Next</a>
     <% } %>
   </div>
+  <%}%>
+
+  <div>
+    <h4>Sort by:</h4>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=timestamp&order=desc" class="btn">Timestamp (Descending)</a>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=timestamp&order=asc" class="btn">Timestamp (Ascending)</a>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=read_count&order=desc" class="btn">Read Count (Descending)</a>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=read_count&order=asc" class="btn">Read Count (Ascending)</a>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=reading_time&order=desc" class="btn">Reading Time (Descending)</a>
+    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=reading_time&order=asc" class="btn">Reading Time (Ascending)</a>
+</div>
 
   <footer>
     <%- include('./partials/footer'); %>

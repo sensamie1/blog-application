@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blogs</title>
+  <title>My Published Blogs</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
@@ -152,8 +152,10 @@
       <li><%=messages.success%></li>
   </div>
   <%} else {%>
-  <h2>Published Blogs</h2>
-  
+  <h2>My Draft Blogs</h2>
+  <a href="/views/blogcreate" class="btn">Create Blogs</a>
+  <p>Click or tap blog state to publish blog.</p>
+
   <table>
     <tr>
       <th>Title</th>
@@ -161,6 +163,9 @@
       <th>Tags</th>
       <th>Date Created</th>
       <th>Date Updated</th>
+      <th>State</th>
+      <th> </th>
+      <th> </th>
       <th> </th>
     </tr>
       <% blogs.forEach(blog => { %>
@@ -171,7 +176,27 @@
           <td class="dateElement"><%= blog.createdAt %></td>
           <td class="dateElement"><%= blog.updatedAt %></td>
           <td>
-            <a href="/views/blogs/<%= blog._id %>">
+            <form action="/views/blogs/update/<%= blog._id %>" method="PUT">
+              <input 
+              id="statusUpdate"
+              type="hidden" 
+              name="state" 
+              value="published"
+              />
+
+              <button 
+              id="myButton"
+              type="submit"
+              class="myButton"
+              formmethod="post" 
+              title="Click to change state of blog!"
+              style="background-color: #e57411">
+                <%= blog.state %>
+              </button>
+            </form>
+          </td>
+          <td>
+            <a href="/views/auth-blogs/<%= blog._id %>">
               <button 
                 id="myButton"
                 title="Click to read blog!"
@@ -180,6 +205,38 @@
               </button>
             </a>
           </td>
+          <td>
+            <a href="/views/blogs/edit/<%= blog._id %>">
+              <button
+              id="myButton"
+              type="submit"
+              class="myButton"
+              formmethod="get" 
+              title="Edit!"
+              style="background-color: #505459">
+                <i class="fa fa-edit" style="font-size:24px"></i>
+              </button>
+            </a>
+          </td>
+          <td>
+            <form action="/views/blogs/delete/<%= blog._id %>" method="DELETE">
+              <input 
+              id="statusUpdate"
+              type="hidden" 
+              name="state" 
+              value="deleted"
+              />
+              <button
+              id="myButton"
+              type="submit"
+              class="myButton"
+              formmethod="post" 
+              title="Temporary delete!"
+              style="background-color: #710202">
+                <i class="material-icons">delete</i>
+              </button>
+            </form>
+          </td>
         </tr>
         <% }); %>
   </table>
@@ -187,7 +244,7 @@
   <!-- Pagination buttons -->
   <div class="pagination">
     <% if (current > 1) { %>
-        <a href="/views/blogs?page=<%= Number(current) - 1 %>" class="btn">Previous</a>
+        <a href="/views/auth-blogsdraft?page=<%= Number(current) - 1 %>" class="btn">Previous</a>
     <% } else { %>
         <a class="btn" style="cursor: not-allowed;">Previous</a>
     <% } %>
@@ -195,22 +252,13 @@
     <p>Page <%= current %> of <%= pages %></p>
 
     <% if (current < pages) { %>
-        <a href="/views/blogs?page=<%= Number(current) + 1 %>" class="btn">Next</a>
+        <a href="/views/auth-blogsdraft?page=<%= Number(current) + 1 %>" class="btn">Next</a>
     <% } else { %>
         <a class="btn" style="cursor: not-allowed;">Next</a>
     <% } %>
   </div>
   <%}%>
 
-  <div>
-    <h4>Sort by:</h4>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=timestamp&order=desc" class="btn">Timestamp (Descending)</a>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=timestamp&order=asc" class="btn">Timestamp (Ascending)</a>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=read_count&order=desc" class="btn">Read Count (Descending)</a>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=read_count&order=asc" class="btn">Read Count (Ascending)</a>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=reading_time&order=desc" class="btn">Reading Time (Descending)</a>
-    <a href="/views/auth-blogs?page=<%= Number(current)%>&sort=reading_time&order=asc" class="btn">Reading Time (Ascending)</a>
-</div>
 
   <footer>
     <%- include('./partials/footer'); %>

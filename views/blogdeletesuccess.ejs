@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deleted</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    .container {
+      max-width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+    h2 {
+      color: #333;
+    }
+    .btn {
+      display: block;
+      width: 60%;
+      max-width: 200px;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #2a5694;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background-color: #0296cc;
+    }
+
+    @media (max-width: 768px) {
+      .btn {
+        width: 80%;
+      }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <h2>Blog Deleted!</h2>
+    <p>Your blog has been deleted. Check deleted blogs to restore (click on the state button) or permanently delete blog.</p>
+    <a class="btn" href="/views/auth-blogspublished">Published</a>
+    <a class="btn" href="/views/auth-blogsdraft">Draft</a>
+    <a class="btn" href="/views/auth-blogsdeleted">Deleted</a>
+  </div>
+
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
+
+
+</body>
+</html>

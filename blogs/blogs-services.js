@@ -258,121 +258,70 @@ const getOwnerBlogs = async (req, res) => {
   }
 };
 
+
 const updateBlogState = async (req, res) => {
-  try {
-    logger.info('[UpdateBlogState] => Update blog state process started...')
+  logger.info('[UpdateState] => Update blog state process started...');
+  const id = req.params.id;
+  const updatedBlog = req.body
+  console.log(updatedBlog);
+  BlogModel.findByIdAndUpdate(id, updatedBlog, { new: true })
+    .then(newState => {
+      res.redirect('/views/blogupdatesuccess')
+      logger.info('[UpdateState] => Update blog state process done.');
+    }).catch(err => {
+      console.log(err) 
+      return res.status(500).send(err)
+    })
 
-    const blogId = req.params.id;
-    const authorId = req.user._id
+}
 
-    if (!mongoose.Types.ObjectId.isValid(blogId)) {
-      return {
-        code: 400,
-        message: 'Invalid ID format' }
-    }
-
-    const blog = await BlogModel.findOne({ _id: blogId, author_id: authorId });
-
-    if (!blog) {
-      return {
-        code: 404,
-        message: 'Blog not found or not authorized.'
-      } 
-    }
-
-    blog.state = req.body.state || blog.state;
-
-    const updatedBlog= await blog.save();
-
-    logger.info('[UpdateBlogState] => Update blog state process done.')
-    return {
-      code: 200,
-      message: 'Blog state updated successfully',
-      data: updatedBlog,
-    }
-  } catch (error) {
-    return {
-      code: 500,
-      message: 'Server Error',
-      data: null
-    }
-  }
-};
 
 const editBlog = async (req, res) => {
-  try {
-    logger.info('[EditBlog] => Edit blog process started...')
+  logger.info('[EditBlog] => Edit blog process started...');
+  const id = req.params.id;
+  const updatedBlog = req.body
+  console.log(updatedBlog);
+  BlogModel.findByIdAndUpdate(id, updatedBlog, { new: true })
+    .then(newBlog => {
+      res.redirect('/views/blogupdatesuccess')
+    logger.info('[EditBlog] => Edit blog process done.');
+    }).catch(err => {
+      console.log(err) 
+      return res.status(500).send(err)
+    })
 
-    const blogId = req.params.id;
-    const authorId = req.user._id
+}
 
-    if (!mongoose.Types.ObjectId.isValid(blogId)) {
-      return res.status(400).json({ message: 'Invalid ID format' });
-    }
 
-    const blog = await BlogModel.findOne({ _id: blogId, author_id: authorId });
+const deleteState = async (req, res) => {
+  logger.info('[ChangeDeleteState] => Change delete state process started...');
+  const id = req.params.id;
+  const updatedBlog = req.body
+  console.log(updatedBlog);
+  BlogModel.findByIdAndUpdate(id, updatedBlog, { new: true })
+    .then(newStatus => {
+      res.redirect('/views/blogdeletesuccess')
+    logger.info('[ChangeDeleteState] => Change delete state process done.');
+    }).catch(err => {
+      console.log(err) 
+      return res.status(500).send(err)
+    })
 
-    if (!blog) {
-      return res.status(404).json({ message: 'Blog not found or not authorized' });
-    }
-    blog.title = req.body.title || blog.title;
-    blog.description = req.body.description || blog.description;
-    blog.tags = req.body.tags || blog.tags;
-    blog.body = req.body.body || blog.body;
-
-    const editedBlog= await blog.save();
-
-    logger.info('[EditBlog] => Edit blog process done.')
-    return {
-      code: 200,
-      message: 'Blog edited successfully',
-      data: editedBlog,
-    };
-  } catch (error) {
-    return {
-      code: 500,
-      message: 'Server Error',
-      data: null
-    };
-  }
-};
+}
 
 const deleteBlog = async (req, res) => {
-  try {
-    logger.info('[DeleteBlog] => Delete blog process started...');
+  logger.info('[PermenentDelete] => Permanent delete process started...');
 
-    const blogId = req.params.id;
-    const authorId = req.user._id;
-
-    if (!mongoose.Types.ObjectId.isValid(blogId)) {
-      return {
-        code: 400,
-        message: 'Invalid ID format' 
-      };
-    }
-
-    const deletedBlog = await BlogModel.findByIdAndRemove({ _id: blogId, author_id: authorId });
-
-    if (!deletedBlog) {
-      return {
-      code: 404,
-      message: 'Blog not found or not authorized.'
-    };
-    }
-
-    logger.info('[DeleteBlog] => Delete blog process done.');
-    return{
-      code: 200,
-      message: 'Blog deleted successfully.',
-    };
-  } catch (error) {
-    return {
-      code: 500,
-      message: 'Server Error',
-      data: null,
-    };
-  }
-};
+  const id = req.params.id;
+  BlogModel.findByIdAndRemove(id)
+    .then(response => {
+    res.redirect('/views/auth-blogsdeleted')
+  logger.info('[PermenentDelete] => Permanent delete process done.');
+  }).catch(err => {
+      console.log(err) 
+      return res.status(500).send(err)
+    })
+}
 
 
 module.exports = {
@@ -383,5 +332,6 @@ module.exports = {
   updateBlogState,
   getOwnerBlogs,
   editBlog,
+  deleteState,
   deleteBlog,
 }
