@@ -280,7 +280,11 @@ const editBlog = async (req, res) => {
   logger.info('[EditBlog] => Edit blog process started...');
   const id = req.params.id;
   const updatedBlog = req.body
-  console.log(updatedBlog);
+  const paragraphs = updatedBlog.body.split(/\r?\n/);
+  const formattedBody = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("");
+
+  updatedBlog.body = formattedBody;
+  
   BlogModel.findByIdAndUpdate(id, updatedBlog, { new: true })
     .then(newBlog => {
       res.redirect('/views/blogupdatesuccess')

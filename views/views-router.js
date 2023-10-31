@@ -290,17 +290,16 @@ router.get('/blogcreate', (req, res) => {
 
 // /views/blogcreate (user create blog)
 router.post('/blogcreate', async (req, res) => {
+    const paragraphs = req.body.body.split(/\r?\n/);
+    const formattedBody = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("");
     const response = await blogService.createBlog({
         title: req.body.title,
         description: req.body.description,
         state: "draft",
         author_id: res.locals.user._id,
         tags: req.body.tags,
-        body: req.body.body
+        body: formattedBody
     });
-
-    console.log({ body: req.body });
-    console.log(response);
 
     if (response.code === 201) {
         req.flash('success', 'Blog created! Check my blogs.');
@@ -476,11 +475,9 @@ router.get('/blogs/edit/:id', async (req, res) => {
         }
 
         const blogs = await BlogModel.findById(id);
-        console.log(blogs);
         if (!blogs) {
             res.redirect('/blognotcreated');
         } else {
-            console.log(blogs);
             res.render('editblog', { 
                 blogs: blogs,
             });
