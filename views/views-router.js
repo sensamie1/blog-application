@@ -85,7 +85,7 @@ router.get('/search', async (req, res) => {
             .limit(perPage);
 
         if (blogs.length === 0) {
-            req.flash('error', `There are no published blogs with "${query}" at this time.`);
+            req.flash('error', `Your search - "${query}"  - did not match any published document.`);
             res.render('blogs', {
                 user: res.locals.user,
                 blogs: blogs,
@@ -341,7 +341,7 @@ router.get('/auth-search', async (req, res) => {
             .limit(perPage);
 
         if (blogs.length === 0) {
-            req.flash('error', `There are no published blogs with "${query}" at this time.`);
+            req.flash('error', `Your search - "${query}"  - did not match any published document.`);
             res.render('auth-blogs', {
                 user: res.locals.user,
                 blogs: blogs,
